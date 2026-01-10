@@ -36,6 +36,23 @@
             scroll-behavior: smooth;
         }
         
+        /* --- GLOBAL PARALLAX PREPARATION (ALL VIEWPORTS) --- */
+        /* Target sections for isolation and parallax readiness */
+        #hero,
+        #about,
+        #why-us,
+        #services,
+        #approach,
+        #features,
+        #process,
+        #insights,
+        #contact-cta {
+            position: relative; /* Essential for containing absolute parallax children */
+            overflow: hidden; /* Prevents parallax children from causing scrollbars */
+        }
+
+        /* --- END PARALLAX PREPARATION --- */
+
         .fixed-header {
             position: fixed;
             top: 0;
@@ -635,15 +652,16 @@
                 margin-bottom: 1.5rem; 
             }
             
-            .category-title-pill {
+            /* REMOVED/OVERRIDDEN FOR 2x2 GRID */
+            /* .category-title-pill {
                  width: 90%; 
                  margin-left: 5%;
                  margin-top: 1.5rem;
                  margin-bottom: 1.5rem;
-            }
+            } */
         }
         
-        /* --- CSS Overrides for Unified Grid Density and Visual Footprint --- */
+        /* --- CSS Overrides for Unified Grid Density and Visual Footprint (Desktop/Tablet) --- */
         
         /* 1. Unify Grid Density: Force all target grids to use the reference 200px min-width */
         .grind-grid,
@@ -733,7 +751,7 @@
             box-shadow: 0 10px 20px rgba(255, 102, 193, 0.4);
         }
         
-        /* --- CSS Overrides to Fix Mobile Centering of Category Title Pills --- */
+        /* --- CSS Overrides to Fix Mobile Centering of Category Title Pills (Pre-2x2 fix) --- */
         
         @media (max-width: 768px) {
             .category-title-pill {
@@ -746,6 +764,74 @@
                 
                 display: block;
             }
+
+            /* --- MOBILE VIEW ONLY (max-width: 768px): Strict 2x2 Grid Overrides --- */
+            
+            /* 1. Target all card-based grid sections for 2x2 layout */
+            .service-grid, 
+            .other-services-grid,
+            .grind-grid,
+            .approach-grid,
+            .features-grid,
+            .process-grid,
+            .insights-grid {
+                /* Force strict 2x2 layout: 2 equal-width columns */
+                grid-template-columns: repeat(2, 1fr);
+                
+                /* Ensure consistent gap/spacing */
+                gap: 1rem; 
+                
+                /* Center the grid within the section padding if needed */
+                justify-content: center;
+                align-items: stretch;
+            }
+
+            /* 2. Unify Card Heights for the 2x2 Grid (Critical for balance) */
+
+            /* Unify Service/Insight Card Height (uses var(--unified-card-height) from root which is 260px) */
+            .service-card,
+            .insight-card {
+                height: var(--unified-card-height); 
+                width: 100%; /* Ensure they take full grid cell width */
+            }
+
+            /* Unify Icon/Process Card Height (uses var(--smaller-unified-height) from root which is 200px) */
+            .grind-item,
+            .icon-card,
+            .process-step {
+                height: var(--smaller-unified-height);
+                width: 100%;
+                
+                /* Re-adjust internal alignment for smaller mobile space if needed */
+                padding: 0.75rem;
+            }
+            
+            /* Re-adjust image height within process step for reduced card height */
+            .process-step img {
+                height: 100px;
+            }
+            
+            /* Re-adjust image height within service card */
+            .service-card img {
+                height: 140px; 
+            }
+            
+            /* Re-adjust image height within insight card */
+            .insight-card img {
+                height: 110px; 
+            }
+            
+            /* Ensure the insight card text area adapts well */
+            .insight-card h4 {
+                font-size: 1rem;
+                padding: 0.5rem 0.75rem 0;
+            }
+            .insight-card p {
+                padding: 0 0.75rem 0.75rem;
+                font-size: 0.9rem;
+            }
+            /* --- END MOBILE 2x2 GRID OVERRIDES --- */
+
         }
         </style>
 </head>
